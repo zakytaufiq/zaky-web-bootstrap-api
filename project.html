@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--Meta ViewPort : Agar web bisa responsive -->  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Memanggil Librari CSS : Boostrap , Boxcicon, dan css yang digunakan -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>Web Zaky</title>
+</head>
+<body>
+<!--Header : Posisinya fix di atas -->
+<header class="bg-light shadow-sm fixed-top">
+     <!--Navbar : Navbar dari boostrap yang akan berubah jadi hamburger icon saat layar < 768px -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container">
+            <!--Navbar Brand : Logo / atau nama -->
+            <a class="navbar-brand" href="#">Web Zaky</a>
+            <!--Navbar : button humberger yg akan muncul menggantikan nav menu saat ukuran layar < 768 -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+             <!--Navbar : Nav Menu yang akan tampil saat ukuran layar > 768px -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#portfolio">Project</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!--akhir header -->
+
+<!-- Isi : Projek -->
+<main class="container">
+  <section id="portfolio" class="portfolio section">
+    <div class="container">
+        <h2 class="section-title text-center mb-4">Project</h2>
+        <div class="row" id="portfolio-items">
+            <!-- Card-card portofolio akan dimasukkan di sini -->
+        </div>
+    </div>
+</section>
+</main>
+<!-- akhir isi -->
+
+<!-- Footer  -->
+<footer class="bg-dark text-white text-center py-3">
+    <div class="mb-3">
+        <a href="https://www.instagram.com/zakytfq/" class="text-white me-5"><i class='bx bxl-instagram social-icon'></i></a>
+        <a href="https://www.linkedin.com/in/muhammad-zaky-taufiq-35a8112a3/" class="text-white me-2"><i class='bx bxl-linkedin social-icon'></i></a>
+    </div>
+    <p class="mb-0">&copy; Zaky. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    //mengambil data dari json
+    fetch('assets/js/projects.json')
+        .then(response => response.json())
+        .then(data => {
+            //mendapatkan tempat untuk menampilkan halaman html berdasarkan ID
+            const portfolioItems = document.getElementById('portfolio-items');
+            //iterasi untuk membuat card
+            data.forEach(project => {
+                //membuat div untuk card
+                const card = document.createElement('div');
+                card.classList.add('col-md-6', 'mb-4');
+
+                //membuat isi card sesuai data json
+                card.innerHTML = `
+                    <div class="portfolio-item">
+                      <div class="portfolio-content h-100 card">
+                        <img src="${project.image}" class="img-fluid card-img-top" alt="">
+                        <div class="portfolio-info">
+                          <h4>${project.category}</h4>
+                          <p>${project.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                `;
+                //menambahkan car ke elemen html yang dituju
+                portfolioItems.appendChild(card);
+            });
+        })
+        .catch(error => console.error('Error fetching projects:', error));
+});
+
+</script>
+</body>
+</html>
